@@ -4,7 +4,7 @@
 pcap_dir="/Users/boivinr/Downloads/pcap"
 
 # Get a list of all PCAP files in the directory, sorted by name
-pcap_files=$(ls -lrt $pcap_dir/*.pcap)
+pcap_files=$(ls -1rt $pcap_dir/*.pcap)
 
 # Loop through the PCAP files and process them one by one
 for pcap_file in $pcap_files; do
@@ -23,7 +23,7 @@ for pcap_file in $pcap_files; do
         fi
 
         # Use tcpreplay to replay the packet with the calculated delay
-        tcpreplay --topspeed --preload-pcap -i eth0 -D "$delay_ms" -c 1 "$pcap_file"
+        tcpreplay -t -K -i en0 -D "$delay_ms" -c 1 "$pcap_file"
 
         # Update the previous timestamp
         prev_timestamp="$timestamp"
