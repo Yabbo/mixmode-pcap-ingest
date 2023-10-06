@@ -1,6 +1,9 @@
 # mixmode-pcap-ingest
 Read in pcap files from a directory and replay them using tshark to a nic
 
+NOTES: 
+- This script must be run as root to have access to the nic. 
+- You must specify the pcap directory and nic to broadcast to
 
 ---
 Current Error:
