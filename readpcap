@@ -1,29 +1,68 @@
 #!/bin/bash
 
+#-----------------------------------------------------------------
+# Configuration
+
+# Define Network interface to play to
+interface="en0"
+
 # Define the directory containing the sequential PCAP files
 pcap_dir="/Users/boivinr/Downloads/pcap"
 
+#----------------------------------------------------------------
+
+# Check if the directory exists
+if [ ! -d "$pcap_dir" ]; then
+    echo "Directory not found: $pcap_dir"
+    exit 1
+fi
+
 # Get a list of all PCAP files in the directory, sorted by name
-pcap_files=$(ls -1rt $pcap_dir/*.pcap)
+pcap_files=$(ls -1rt "$pcap_dir"/*.pcap)
+
+# Check if there are any PCAP files
+if [ -z "$pcap_files" ]; then
+    echo "No PCAP files found in directory: $pcap_dir"
+    exit 1
+fi
+
+# Create a log file to capture the script's output
+log_file="script_log.txt"
+echo "Script started at $(date)" > "$log_file"
 
 # Loop through the PCAP files and process them one by one
 for pcap_file in $pcap_files; do
+    # Check if the PCAP file exists
+    if [ ! -e "$pcap_file" ]; then
+        echo "File not found: $pcap_file"
+        continue
+    fi
+
     # Use tshark to read the PCAP file and extract packet timestamps
     timestamps=$(tshark -r "$pcap_file" -T fields -e frame.time_epoch)
 
-    # Calculate delays based on packet timestamps
+    # Check if tshark command was successful
+    if [ $? -ne 0 ]; then
+        echo "Error running tshark for file: $pcap_file"
+        continue
+    fi
+
+    # Calculate delays based on packet timestamps and replay packets with delays
     prev_timestamp=0
     for timestamp in $timestamps; do
-        if [ "$prev_timestamp" -eq 0 ]; then
-            # For the first packet, send immediately
-            delay_ms=0
-        else
+	clear #clear screen for stats
+        if [ "$(echo "$timestamp != 0" | bc -l)" -eq 1 ]; then
             # Calculate delay based on the time difference between packets
             delay_ms=$(bc <<< "scale=3; ($timestamp - $prev_timestamp) * 1000")
+            # Use tcpreplay to replay the packet and redirect stderr to /dev/null
+            tcpreplay -t -K -i $interface "$pcap_file" 2>/dev/null
         fi
 
-        # Use tcpreplay to replay the packet with the calculated delay
-        tcpreplay -t -K -i en0 -D "$delay_ms" -c 1 "$pcap_file"
+        # Check if tcpreplay command was successful
+        if [ $? -ne 0 ]; then
+            echo "Error running tcpreplay for file: $pcap_file"
+            break
+        fi
 
         # Update the previous timestamp
         prev_timestamp="$timestamp"
@@ -31,4 +70,8 @@ for pcap_file in $pcap_files; do
 
     # Sleep for a while before processing the next PCAP file (optional)
     sleep 5
-done
+done | tee -a "$log_file"  # Append the script's output to the log file
+
+# Display a message indicating script completion
+echo "Script completed at $(date)"
+
