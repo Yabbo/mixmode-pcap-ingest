@@ -11,9 +11,10 @@ pcap_dir="/Users/boivinr/Downloads/pcap"
 
 # Log file to capture scripts output. 
 #If you dont specify a directory location it will log to the working directory the script is run from 
-log_file="script_log.txt"
+log_file="./$(date +"%FT%H%M")_readpcap_log.txt"
 
 #-----------------------------------------------------------------------------------------------------
+
 
 # Check if the directory exists
 if [ ! -d "$pcap_dir" ]; then
