@@ -4,9 +4,22 @@ Read in pcap files from a directory and replay them using tshark to a nic
 NOTES: 
 - This script must be run as root to have access to the nic. 
 - You must specify the pcap directory and nic to broadcast to
-
+-- This is configured at the top of the script in the Configuration section
+- It will output a log to script_log.txt in the directory its currently being run from unless set in the configuration section..
 ---
-Current Error:
-./readpcap: line 17: [: 1696617359.850256000: integer expression expected
+Configuration section in script
+`
+#-------------------------------------------------------------------------------------------------------------------------------------------
+# Configuration
 
-also getting a message like tshark isnt being run correctly or something but it seams to process file or looks like it maybe not sure.
+# Define Network interface to play to
+interface="en0"
+
+# Define the directory containing the sequential PCAP files
+pcap_dir="/Users/boivinr/Downloads/pcap"
+
+# Log file to capture scripts output. If you dont specify a directory location it will log to the working directory the script it run from
+log_file="script_log.txt"
+
+#-------------------------------------------------------------------------------------------------------------------------------------------
+`

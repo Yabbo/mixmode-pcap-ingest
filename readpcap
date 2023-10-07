@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#-----------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------
 # Configuration
 
 # Define Network interface to play to
@@ -9,7 +9,10 @@ interface="en0"
 # Define the directory containing the sequential PCAP files
 pcap_dir="/Users/boivinr/Downloads/pcap"
 
-#----------------------------------------------------------------
+# Log file to capture scripts output. If you dont specify a directory location it will log to the working directory the script it run from 
+log_file="script_log.txt"
+
+#-------------------------------------------------------------------------------------------------------------------------------------------
 
 # Check if the directory exists
 if [ ! -d "$pcap_dir" ]; then
@@ -26,8 +29,7 @@ if [ -z "$pcap_files" ]; then
     exit 1
 fi
 
-# Create a log file to capture the script's output
-log_file="script_log.txt"
+# Set the log files Start for each run
 echo "Script started at $(date)" > "$log_file"
 
 # Loop through the PCAP files and process them one by one
