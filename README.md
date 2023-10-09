@@ -2,17 +2,17 @@
 This script will read in pcap files from a directory and replay them using tshark to a nic
 
 **PREREQUISITS:** 
-- tcpreplay - Already installed on sensor.
-- dummy kernel module installed
-- tshark (wireshark terminal verison) 
--- Install on centos sensor with  `sudo yum -y install wireshark` Rocky sensor `sudo yum -y install wireshark-cli`
-- ability to run with root level permissions.
+* tcpreplay - Already installed on sensor.
+* dummy kernel module installed
+* tshark/wireshark terminal verison 
+  * Install on centos sensor with  `sudo yum -y install wireshark` Rocky sensor `sudo yum -y install wireshark-cli`
+* ability to run with root level permissions.
   
 **NOTES:**
-- This script must be run as root to have access to the nic. 
-- You must specify the pcap directory and nic to broadcast to.
--- This is configured at the top of the script in the Configuration section.
-- It will output a log to (date)T(time)_readpcap_log.txt in the directory its currently being run from unless set in the configuration section.
+* This script must be run as root to have access to the nic. 
+* You must specify the pcap directory and interface to broadcast to.
+  * This is configured at the top of the script in the Configuration section.
+* It will output a log to (date)T(time)_readpcap_log.txt in the directory its currently being run from unless set in the configuration section.
 
 **INSTALLATION:**
 - Download the readpcap and dummy-interface files and make them executable. `chmod +x readpcap` `chmod +x dummy-interface`
