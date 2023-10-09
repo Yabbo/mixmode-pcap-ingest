@@ -5,7 +5,8 @@ This script will read in pcap files from a directory and replay them using tshar
 * tcpreplay - Already installed on sensor.
 * dummy kernel module installed
 * tshark/wireshark terminal verison 
-  * Install on centos sensor with  `sudo yum -y install wireshark` Rocky sensor `sudo yum -y install wireshark-cli`
+  * Install on centos sensor with  `sudo yum -y install wireshark`
+  * Install on Rocky sensor with `sudo yum -y install wireshark-cli`
 * ability to run with root level permissions.
   
 **NOTES:**
