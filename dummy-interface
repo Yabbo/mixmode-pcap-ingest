@@ -10,6 +10,7 @@ while true; do
     ip link set name "$interface_name" dev dummy0
     ifconfig "$interface_name" up
     ifconfig "$interface_name" promisc
+    echo "New Interface" $interface_name "created. please update your readpcap script and change the configuration to use this interface"
     break  # Exit the loop once the renaming is done
   fi
 
