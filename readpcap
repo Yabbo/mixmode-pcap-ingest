@@ -4,10 +4,10 @@
 # Configuration
 
 # Define Network interface to play to
-interface="en0"
+interface="eth2"
 
 # Define the directory containing the sequential PCAP files
-pcap_dir="/Users/boivinr/Downloads/pcap"
+pcap_dir="/data/pcap"
 
 # Log file to capture scripts output. 
 #If you dont specify a directory location it will log to the working directory the script is run from 

@@ -3,7 +3,7 @@ This script will read in pcap files from a directory and replay them using tshar
 
 **PREREQUISITS:** 
 - tcpreplay - Already installed on sensor
-- tshark (wireshark terminal verison) - Install on centos/rocky sensor with  `sudo yum -y install wireshark-cli`
+- tshark (wireshark terminal verison) - Install on centos sensor with  `sudo yum -y install wireshark` Rocky sensor `sudo yum -y install wireshark-cli`
 - ability to run with root level permissions
   
 **NOTES:**
@@ -22,10 +22,10 @@ This script will read in pcap files from a directory and replay them using tshar
 # Configuration
 
 # Define Network interface to play to
-interface="en0"
+interface="eth2"
 
 # Define the directory containing the sequential PCAP files
-pcap_dir="/Users/boivinr/Downloads/pcap"
+pcap_dir="/data/pcap"
 
 # Log file to capture scripts output.
 # If you dont specify a directory location it will log to the working directory the script is run from
