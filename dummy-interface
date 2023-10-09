@@ -1,0 +1,18 @@
+#!/bin/sh
+interface_number=1
+
+while true; do
+  interface_name="eth$interface_number"
+  
+  # Check if the interface exists
+  if [ $(ifconfig | grep -c "$interface_name") -eq 0 ]; then
+    # Rename dummy0 to the non-existing interface name
+    ip link set name "$interface_name" dev dummy0
+    ifconfig "$interface_name" up
+    ifconfig "$interface_name" promisc
+    break  # Exit the loop once the renaming is done
+  fi
+
+  # Increment the interface number for the next iteration
+  interface_number=$((interface_number + 1))
+done
