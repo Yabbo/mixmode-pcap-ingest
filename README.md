@@ -17,6 +17,8 @@ This script will read in pcap files from a directory and replay them using tshar
 
 **INSTALLATION:**
 - Download the readpcap and dummy-interface files and make them executable. `chmod +x readpcap` `chmod +x dummy-interface`
+- Create a dummy interface
+  - centos `modprobe dummy` then `ip link add dummy0 type dummy`
 - Run the dummy-interface script. `./dummy-interface`  It will create a new interface and provide you the name to set in the readcap file.
 - Edit readpcap `vim readcap` and set variables in the configuration section as described below using the interface created by the dummy-interface.
 - Run the script `sudo ./readpcap` and verify everything is working propery.
